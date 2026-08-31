@@ -93,20 +93,18 @@
     .menu-container {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
-    /* زێدەکرنا cursor: pointer بۆ هندێ کو دیار ببیت کلیک ل سەر دەبت */
     .item-card {
       background: var(--card-bg);
       border-radius: 12px;
-      padding: 14px;
+      overflow: hidden;
       display: flex;
-      justify-content: space-between;
       align-items: center;
       border: 1px solid #334155;
       cursor: pointer;
-      transition: transform 0.1s, border-color 0.2s;
+      transition: transform 0.2s, border-color 0.2s;
     }
 
     .item-card:hover {
@@ -114,9 +112,24 @@
       transform: translateY(-2px);
     }
 
+    .item-img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .item-content {
+      padding: 12px;
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     .item-details h3 {
       margin: 0 0 6px 0;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     .item-details p {
@@ -129,22 +142,20 @@
     .price {
       font-weight: bold;
       color: var(--accent-color);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       white-space: nowrap;
-      margin-inline-start: 12px;
+      margin-inline-start: 10px;
       text-align: end;
     }
 
-    /* ------------------------------------------- */
-    /* دیزاینا Modal / پەنجەرا داخلبوونێ           */
-    /* ------------------------------------------- */
+    /* Modal Styling */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       display: none;
       justify-content: center;
       align-items: center;
@@ -162,38 +173,56 @@
       border: 1px solid var(--accent-color);
       border-radius: 16px;
       width: 100%;
-      max-width: 400px;
-      padding: 20px;
+      max-width: 420px;
+      overflow: hidden;
       position: relative;
       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
 
+    .modal-banner {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-body {
+      padding: 18px;
+    }
+
     .modal-close {
       position: absolute;
-      top: 12px;
-      left: 14px;
-      background: transparent;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.6);
       border: none;
-      color: var(--text-sub);
-      font-size: 1.4rem;
+      color: #fff;
+      font-size: 1.2rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
     }
 
     html[dir="ltr"] .modal-close {
       left: auto;
-      right: 14px;
+      right: 10px;
     }
 
     .modal-title {
       font-size: 1.2rem;
       color: var(--accent-color);
-      margin: 0 0 10px 0;
+      margin: 0 0 8px 0;
     }
 
     .modal-desc {
       font-size: 0.85rem;
       color: var(--text-sub);
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       line-height: 1.4;
     }
 
@@ -201,7 +230,7 @@
       font-size: 1.1rem;
       font-weight: bold;
       color: var(--success-color);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .enter-btn {
@@ -212,15 +241,10 @@
       padding: 12px;
       border-radius: 10px;
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
     }
 
-    .enter-btn:active {
-      opacity: 0.9;
-    }
-
-    /* بەشێ پەیوەندییکرنێ (Contact Section) */
     footer.contact-section {
       margin-top: 35px;
       padding-top: 20px;
@@ -229,7 +253,7 @@
 
     .contact-title {
       text-align: center;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--accent-color);
       margin-bottom: 15px;
     }
@@ -250,27 +274,22 @@
       gap: 14px;
       text-decoration: none;
       color: var(--text-main);
-      transition: background 0.2s;
-    }
-
-    .contact-card:active {
-      background: #334155;
     }
 
     .contact-icon {
-      font-size: 1.4rem;
-      width: 32px;
+      font-size: 1.3rem;
+      width: 30px;
       text-align: center;
     }
 
     .contact-info strong {
       display: block;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .contact-info p {
       margin: 2px 0 0 0;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-sub);
     }
 
@@ -284,7 +303,6 @@
 </head>
 <body>
 
-  <!-- دکما هەڵبژارتنا زمانان -->
   <div class="lang-switcher">
     <button class="lang-btn active" onclick="changeLang('bad', this)">بادینی</button>
     <button class="lang-btn" onclick="changeLang('sor', this)">سۆرانی</button>
@@ -297,29 +315,25 @@
     <p id="hotel-subtitle">مێنیویا دیجیتالی و خزمەتگوزاریێن ژووران</p>
   </header>
 
-  <!-- بەشێن سەرەکی -->
   <div class="categories" id="cat-list"></div>
-
-  <!-- لیستایا خوارن و ژووران -->
   <div class="menu-container" id="menu-items"></div>
 
-  <!-- Modal / پەنجەرا داخلبوونێ -->
   <div class="modal-overlay" id="itemModal" onclick="closeModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closeModalDirect()">&times;</button>
-      <h2 class="modal-title" id="m-title">ژوور</h2>
-      <p class="modal-desc" id="m-desc">زانیاری</p>
-      <div class="modal-price" id="m-price">نرخ</div>
-      <button class="enter-btn" id="m-btn" onclick="enterRoom()">داخلبوون / رزێرفکرن</button>
+      <img id="m-img" class="modal-banner" src="" alt="Room Image">
+      <div class="modal-body">
+        <h2 class="modal-title" id="m-title">ژوور</h2>
+        <p class="modal-desc" id="m-desc">زانیاری</p>
+        <div class="modal-price" id="m-price">نرخ</div>
+        <button class="enter-btn" id="m-btn" onclick="enterRoom()">داخلبوون / رزێرفکرن</button>
+      </div>
     </div>
   </div>
 
-  <!-- بەشێ پەیوەندییکرنێ -->
   <footer class="contact-section">
     <div class="contact-title" id="contact-heading">پەیوەندی و ناڤنیشان</div>
     <div class="contact-grid">
-      
-      <!-- تەلەفۆنا ڕێسێپشنێ -->
       <a href="tel:+9647500000000" class="contact-card">
         <span class="contact-icon">📞</span>
         <div class="contact-info">
@@ -328,7 +342,6 @@
         </div>
       </a>
 
-      <!-- واتساپ -->
       <a href="https://wa.me/9647500000000" target="_blank" class="contact-card wa-card">
         <span class="contact-icon">💬</span>
         <div class="contact-info">
@@ -337,7 +350,6 @@
         </div>
       </a>
 
-      <!-- ناڤنیشان -->
       <div class="contact-card">
         <span class="contact-icon">📍</span>
         <div class="contact-info">
@@ -345,7 +357,6 @@
           <p id="val-location">کوردستان، دهۆک - جاددا سەنتەری</p>
         </div>
       </div>
-
     </div>
   </footer>
 
@@ -368,13 +379,13 @@
         subtitle: 'مێنیویا دیجیتالی و خزمەتگوزاریێن ژووران',
         cats: ['هەمی', 'ژوورێن هۆتێلێ', 'تاشتێ', 'خوارنێن سەرەکی', 'ڤەخوارن', 'شێریناهی'],
         items: [
-          { id: 101, cat: 1, title: 'ژوورا تاک (Single Room)', desc: 'تەختەکێ مەزن، وای فای، شاشە 4K، هەوا ساردکەر، تاشتێ بێبەرامبەر', price: '45,000 IQD / شەڤ' },
-          { id: 102, cat: 1, title: 'ژوورا جووت (Double Room)', desc: 'دوو تەخت یان تەختەکێ دوو کەسی، مینی بار، دیمەنەکێ جوان', price: '70,000 IQD / شەڤ' },
-          { id: 103, cat: 1, title: 'سوئێتا شاهانە (VIP Suite)', desc: 'دوو ژوور دگەل هۆلەکێ، جاكوزی، خزمەتگوزارییا تایبەت 24/7', price: '120,000 IQD / شەڤ' },
-          { id: 201, cat: 2, title: 'تاشتێیا شاهانە', desc: 'پەنێر، هێلك، هه‌نگڤین، زەیتوون، کەرە و چای', price: '8,000 IQD' },
-          { id: 301, cat: 3, title: 'کەبابێ تایبەت', desc: 'گۆشتێ بەرخی دگەل برنج و سالادێ', price: '14,000 IQD' },
-          { id: 401, cat: 4, title: 'کاپوچینۆ', desc: 'قهوەیا فريش دگەل شیری', price: '4,000 IQD' },
-          { id: 501, cat: 5, title: 'کێکا شوکولاتێ', desc: 'کێکا گەرم دگەل ئایسکرێمێ', price: '5,000 IQD' }
+          { id: 101, cat: 1, title: 'ژوورا تاک (Single Room)', desc: 'تەختەکێ مەزن، وای فای، شاشە 4K، هەوا ساردکەر، تاشتێ بێبەرامبەر', price: '45,000 IQD / شەڤ', img: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=500&q=80' },
+          { id: 102, cat: 1, title: 'ژوورا جووت (Double Room)', desc: 'دوو تەخت یان تەختەکێ دوو کەسی، مینی بار، دیمەنەکێ جوان', price: '70,000 IQD / شەڤ', img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80' },
+          { id: 103, cat: 1, title: 'سوئێتا شاهانە (VIP Suite)', desc: 'دوو ژوور دگەل هۆلەکێ، جاكوزی، خزمەتگوزارییا تایبەت 24/7', price: '120,000 IQD / شەڤ', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=500&q=80' },
+          { id: 201, cat: 2, title: 'تاشتێیا شاهانە', desc: 'پەنێر، هێلك، هه‌نگڤین، زەیتوون، کەرە و چای', price: '8,000 IQD', img: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80' },
+          { id: 301, cat: 3, title: 'کەبابێ تایبەت', desc: 'گۆشتێ بەرخی دگەل برنج و سالادێ', price: '14,000 IQD', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=80' },
+          { id: 401, cat: 4, title: 'کاپوچینۆ', desc: 'قهوەیا فريش دگەل شیری', price: '4,000 IQD', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80' },
+          { id: 501, cat: 5, title: 'کێکا شوکولاتێ', desc: 'کێکا گەرم دگەل ئایسکرێمێ', price: '5,000 IQD', img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80' }
         ],
         contactTitle: 'پەیوەندی و ناڤنیشان',
         phoneLabel: 'ڕێسێپشنا هۆتێلێ',
@@ -389,13 +400,13 @@
         subtitle: 'مێنیوی دیجیتالی و خزمەتگوزاریەکانی ژوور',
         cats: ['هەمووی', 'ژوورەکانی هۆتێل', 'بەیانیان', 'خواردنی سەرەکی', 'خواردنەوەکان', 'شیرینی'],
         items: [
-          { id: 101, cat: 1, title: 'ژووری تاک (Single Room)', desc: 'تەختێکی گەورە، وای فای، شاشەی 4K، فێنککەرەوە، بەیانیانی بێبەرامبەر', price: '45,000 IQD / شەو' },
-          { id: 102, cat: 1, title: 'ژووری دوو کەسی (Double Room)', desc: 'دوو تەخت یان تەختێکی دوو کەسی، مینی بار، دیمەنێکی جوان', price: '70,000 IQD / شەو' },
-          { id: 103, cat: 1, title: 'سوئێتی شاهانە (VIP Suite)', desc: 'دوو ژوور لەگەڵ هۆڵێک، جاکوزی، خزمەتگوزاری تایبەت 24/7', price: '120,000 IQD / شەو' },
-          { id: 201, cat: 2, title: 'بەیانیانی شاهانە', desc: 'پەنیر، هێلکە، هەنگوین، زەیتون، کەرە و چا', price: '8,000 IQD' },
-          { id: 301, cat: 3, title: 'کەبابی تایبەت', desc: 'گۆشتی بەرخ لەگەڵ برنج و سەلاتە', price: '14,000 IQD' },
-          { id: 401, cat: 4, title: 'کاپوچینۆ', desc: 'قاوەی فرێش لەگەڵ شیر', price: '4,000 IQD' },
-          { id: 501, cat: 5, title: 'کێکی شوکولاتە', desc: 'کێکی گەرم لەگەڵ ئایسکرێم', price: '5,000 IQD' }
+          { id: 101, cat: 1, title: 'ژووری تاک (Single Room)', desc: 'تەختێکی گەورە، وای فای، شاشەی 4K، فێنککەرەوە، بەیانیانی بێبەرامبەر', price: '45,000 IQD / شەو', img: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=500&q=80' },
+          { id: 102, cat: 1, title: 'ژووری دوو کەسی (Double Room)', desc: 'دوو تەخت یان تەختێکی دوو کەسی، مینی بار، دیمەنێکی جوان', price: '70,000 IQD / شەو', img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80' },
+          { id: 103, cat: 1, title: 'سوئێتی شاهانە (VIP Suite)', desc: 'دوو ژوور لەگەڵ هۆڵێک، جاکوزی، خزمەتگوزاری تایبەت 24/7', price: '120,000 IQD / شەو', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=500&q=80' },
+          { id: 201, cat: 2, title: 'بەیانیانی شاهانە', desc: 'پەنیر، هێلکە، هەنگوین، زەیتون، کەرە و چا', price: '8,000 IQD', img: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80' },
+          { id: 301, cat: 3, title: 'کەبابی تایبەت', desc: 'گۆشتی بەرخ لەگەڵ برنج و سەلاتە', price: '14,000 IQD', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=80' },
+          { id: 401, cat: 4, title: 'کاپوچینۆ', desc: 'قاوەی فرێش لەگەڵ شیر', price: '4,000 IQD', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80' },
+          { id: 501, cat: 5, title: 'کێکی شوکولاتە', desc: 'کێکی گەرم لەگەڵ ئایسکرێم', price: '5,000 IQD', img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80' }
         ],
         contactTitle: 'پەیوەندی و ناونیشان',
         phoneLabel: 'ڕێسێپشنی هۆتێل',
@@ -410,13 +421,13 @@
         subtitle: 'القائمة الرقمية وخدمات الغرف',
         cats: ['الكل', 'غرف الفندق', 'الإفطار', 'الأطباق الرئيسية', 'المشروبات', 'الحلويات'],
         items: [
-          { id: 101, cat: 1, title: 'غرفة مفردة (Single Room)', desc: 'سرير كبير، واي فاي، شاشة 4K، تكييف، إفطار مجاني', price: '45,000 IQD / ليلة' },
-          { id: 102, cat: 1, title: 'غرفة مزدوجة (Double Room)', desc: 'سريران أو سرير لشخصين، ميني بار، إطلالة جميلة', price: '70,000 IQD / ليلة' },
-          { id: 103, cat: 1, title: 'جناح ملكي (VIP Suite)', desc: 'غرفتان مع صالة، جاكوزي، خدمة خاصة 24/7', price: '120,000 IQD / ليلة' },
-          { id: 201, cat: 2, title: 'إفطار ملكي', desc: 'جبنة، بيض، عسل، زيتون، زبدة، وشاي', price: '8,000 IQD' },
-          { id: 301, cat: 3, title: 'كباب خاص', desc: 'لحم ضأن مع أرز وسلطة', price: '14,000 IQD' },
-          { id: 401, cat: 4, title: 'كابوتشينو', desc: 'قهوة طازجة مع حليب', price: '4,000 IQD' },
-          { id: 501, cat: 5, title: 'كيك الشوكولاتة', desc: 'كيك ساخن مع آيس كريم', price: '5,000 IQD' }
+          { id: 101, cat: 1, title: 'غرفة مفردة (Single Room)', desc: 'سرير كبير، واي فاي، شاشة 4K، تكييف، إفطار مجاني', price: '45,000 IQD / ليلة', img: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=500&q=80' },
+          { id: 102, cat: 1, title: 'غرفة مزدوجة (Double Room)', desc: 'سريران أو سرير لشخصين، ميني بار، إطلالة جميلة', price: '70,000 IQD / ليلة', img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80' },
+          { id: 103, cat: 1, title: 'جناح ملكي (VIP Suite)', desc: 'غرفتان مع صالة، جاكوزي، خدمة خاصة 24/7', price: '120,000 IQD / ليلة', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=500&q=80' },
+          { id: 201, cat: 2, title: 'إفطار ملكي', desc: 'جبنة، بيض، عسل، زيتون، زبدة، وشاي', price: '8,000 IQD', img: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80' },
+          { id: 301, cat: 3, title: 'كباب خاص', desc: 'لحم ضأن مع أرز وسلطة', price: '14,000 IQD', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=80' },
+          { id: 401, cat: 4, title: 'كابوتشينو', desc: 'قهوة طازجة مع حليب', price: '4,000 IQD', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80' },
+          { id: 501, cat: 5, title: 'كيك الشوكولاتة', desc: 'كيك ساخن مع آيس كريم', price: '5,000 IQD', img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80' }
         ],
         contactTitle: 'التواصل والعنوان',
         phoneLabel: 'استقبال الفندق',
@@ -431,13 +442,13 @@
         subtitle: 'Digital Menu & Room Services',
         cats: ['All', 'Hotel Rooms', 'Breakfast', 'Main Dishes', 'Drinks', 'Desserts'],
         items: [
-          { id: 101, cat: 1, title: 'Single Room', desc: 'Queen bed, Free Wi-Fi, 4K TV, AC, Free Breakfast included', price: '$35 / Night' },
-          { id: 102, cat: 1, title: 'Double Room', desc: 'Twin beds or King bed, Mini-bar, City View', price: '$50 / Night' },
-          { id: 103, cat: 1, title: 'VIP Suite', desc: '2 Bedrooms + Living room, Jacuzzi, 24/7 Room Service', price: '$90 / Night' },
-          { id: 201, cat: 2, title: 'Royal Breakfast', desc: 'Cheese, eggs, honey, olives, butter, and tea', price: '$6.00' },
-          { id: 301, cat: 3, title: 'Special Kebab', desc: 'Lamb meat served with rice and salad', price: '$10.00' },
-          { id: 401, cat: 4, title: 'Cappuccino', desc: 'Fresh espresso with steamed milk', price: '$3.00' },
-          { id: 501, cat: 5, title: 'Chocolate Cake', desc: 'Warm cake with vanilla ice cream', price: '$4.00' }
+          { id: 101, cat: 1, title: 'Single Room', desc: 'Queen bed, Free Wi-Fi, 4K TV, AC, Free Breakfast included', price: '$35 / Night', img: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=500&q=80' },
+          { id: 102, cat: 1, title: 'Double Room', desc: 'Twin beds or King bed, Mini-bar, City View', price: '$50 / Night', img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80' },
+          { id: 103, cat: 1, title: 'VIP Suite', desc: '2 Bedrooms + Living room, Jacuzzi, 24/7 Room Service', price: '$90 / Night', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=500&q=80' },
+          { id: 201, cat: 2, title: 'Royal Breakfast', desc: 'Cheese, eggs, honey, olives, butter, and tea', price: '$6.00', img: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80' },
+          { id: 301, cat: 3, title: 'Special Kebab', desc: 'Lamb meat served with rice and salad', price: '$10.00', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=80' },
+          { id: 401, cat: 4, title: 'Cappuccino', desc: 'Fresh espresso with steamed milk', price: '$3.00', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80' },
+          { id: 501, cat: 5, title: 'Chocolate Cake', desc: 'Warm cake with vanilla ice cream', price: '$4.00', img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80' }
         ],
         contactTitle: 'Contact & Location',
         phoneLabel: 'Hotel Reception',
@@ -455,7 +466,6 @@
       document.getElementById('hotel-name').innerText = selected.title;
       document.getElementById('hotel-subtitle').innerText = selected.subtitle;
 
-      // بەشێ پەیوەندیان
       document.getElementById('contact-heading').innerText = selected.contactTitle;
       document.getElementById('label-phone').innerText = selected.phoneLabel;
       document.getElementById('label-wa').innerText = selected.waLabel;
@@ -463,16 +473,13 @@
       document.getElementById('label-location').innerText = selected.locLabel;
       document.getElementById('val-location').innerText = selected.locVal;
 
-      // دکما د ناڤ Modal دا
       document.getElementById('m-btn').innerText = modalTexts[currentLang].enterBtn;
 
-      // پۆلێنکرنا بەشان
       const catContainer = document.getElementById('cat-list');
       catContainer.innerHTML = selected.cats.map((c, i) => 
         `<button class="cat-btn ${i === activeCatIndex ? 'active' : ''}" onclick="selectCategory(${i})">${c}</button>`
       ).join('');
 
-      // فلتەرکرنا ئایتمان
       const filteredItems = activeCatIndex === 0 
         ? selected.items 
         : selected.items.filter(item => item.cat === activeCatIndex);
@@ -480,11 +487,14 @@
       const itemContainer = document.getElementById('menu-items');
       itemContainer.innerHTML = filteredItems.map(item => `
         <div class="item-card" onclick="openModal(${item.id})">
-          <div class="item-details">
-            <h3>${item.title}</h3>
-            <p>${item.desc}</p>
+          <img src="${item.img}" class="item-img" alt="${item.title}">
+          <div class="item-content">
+            <div class="item-details">
+              <h3>${item.title}</h3>
+              <p>${item.desc}</p>
+            </div>
+            <div class="price">${item.price}</div>
           </div>
-          <div class="price">${item.price}</div>
         </div>
       `).join('');
     }
@@ -501,12 +511,12 @@
       renderMenu();
     }
 
-    /* فۆنکشنێن Modal بۆ داخلبوونێ */
     function openModal(id) {
       const selected = data[currentLang];
       selectedItem = selected.items.find(item => item.id === id);
       
       if (selectedItem) {
+        document.getElementById('m-img').src = selectedItem.img;
         document.getElementById('m-title').innerText = selectedItem.title;
         document.getElementById('m-desc').innerText = selectedItem.desc;
         document.getElementById('m-price').innerText = selectedItem.price;
@@ -528,8 +538,6 @@
       if (selectedItem) {
         alert(modalTexts[currentLang].alertMsg + selectedItem.title);
         closeModalDirect();
-        // ل ڤێرێ دکارێ ڕاستەوخۆ رەوانەی لاپەرەکێ دی بکەی یان Link ب دەیێ:
-        // window.location.href = "room-details.html?id=" + selectedItem.id;
       }
     }
 
