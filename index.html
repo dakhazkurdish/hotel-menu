@@ -64,11 +64,33 @@
       font-size: 0.85rem;
     }
 
+    /* Search Box Styling */
+    .search-container {
+      margin-bottom: 15px;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box:focus {
+      border-color: var(--accent-color);
+    }
+
     .categories {
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding: 10px 0 15px;
+      padding: 5px 0 15px;
       -webkit-overflow-scrolling: touch;
     }
 
@@ -112,7 +134,6 @@
       transform: translateY(-2px);
     }
 
-    /* دیزاینا وێنەیی د ناڤ کارتێن ژووران دا */
     .item-img {
       width: 110px;
       height: 100px;
@@ -306,7 +327,7 @@
 <body>
 
   <div class="lang-switcher">
-    <button class="lang-btn active" onclick="changeLang('bad', this)">بادینی</button>
+    <button class="lang-btn" onclick="changeLang('bad', this)">بادینی</button>
     <button class="lang-btn" onclick="changeLang('sor', this)">سۆرانی</button>
     <button class="lang-btn" onclick="changeLang('ar', this)">العربية</button>
     <button class="lang-btn" onclick="changeLang('en', this)">English</button>
@@ -316,6 +337,11 @@
     <h1 id="hotel-name">هۆتێلا دهوک</h1>
     <p id="hotel-subtitle">مێنیویا دیجیتالی و خزمەتگوزاریێن ژووران</p>
   </header>
+
+  <!-- Search Input Section Added -->
+  <div class="search-container">
+    <input type="text" id="search-box" class="search-box" placeholder="لێگەڕیان ل دۆر خوارن یان ژووران..." onkeyup="renderMenu()" />
+  </div>
 
   <div class="categories" id="cat-list"></div>
   <div class="menu-container" id="menu-items"></div>
@@ -363,15 +389,16 @@
   </footer>
 
   <script>
-    let currentLang = 'bad';
+    // وەرگرتنا زمانێ پاشەکەوتکری یان دانانا بادینی ب بێدەنگی
+    let currentLang = localStorage.getItem('hotel_lang') || 'bad';
     let activeCatIndex = 0;
     let selectedItem = null;
 
     const modalTexts = {
-      bad: { enterBtn: 'داخلبوون / رزێرفکرن', alertMsg: 'تۆ داخل بووی د ناڤ: ' },
-      sor: { enterBtn: 'چوونە ژوورەوە / ڕزێرفکردن', alertMsg: 'تۆ چوویتە ژوورەوە لە: ' },
-      ar: { enterBtn: 'الدخول / الحجز', alertMsg: 'لقد دخلت إلى: ' },
-      en: { enterBtn: 'Enter / Reserve', alertMsg: 'You entered: ' }
+      bad: { enterBtn: 'داخلبوون / رزێرفکرن', alertMsg: 'تۆ داخل بووی د ناڤ: ', searchPlaceholder: 'لێگەڕیان ل دۆر خوارن یان ژووران...' },
+      sor: { enterBtn: 'چوونە ژوورەوە / ڕزێرفکردن', alertMsg: 'تۆ چوویتە ژوورەوە لە: ', searchPlaceholder: 'گەڕان بەدوای خواردن یان ژووردا...' },
+      ar: { enterBtn: 'الدخول / الحجز', alertMsg: 'لقد دخلت إلى: ', searchPlaceholder: 'البحث عن طعام أو غرف...' },
+      en: { enterBtn: 'Enter / Reserve', alertMsg: 'You entered: ', searchPlaceholder: 'Search for food or rooms...' }
     };
 
     const data = {
@@ -476,15 +503,25 @@
       document.getElementById('val-location').innerText = selected.locVal;
 
       document.getElementById('m-btn').innerText = modalTexts[currentLang].enterBtn;
+      document.getElementById('search-box').placeholder = modalTexts[currentLang].searchPlaceholder;
 
       const catContainer = document.getElementById('cat-list');
       catContainer.innerHTML = selected.cats.map((c, i) => 
         `<button class="cat-btn ${i === activeCatIndex ? 'active' : ''}" onclick="selectCategory(${i})">${c}</button>`
       ).join('');
 
-      const filteredItems = activeCatIndex === 0 
+      // فلتەرکرنا پۆلان (Categories)
+      let filteredItems = activeCatIndex === 0 
         ? selected.items 
         : selected.items.filter(item => item.cat === activeCatIndex);
+
+      // فلتەرکرنا لێگەڕیانێ (Search)
+      let searchQuery = document.getElementById('search-box').value.toLowerCase();
+      if (searchQuery.trim() !== "") {
+        filteredItems = filteredItems.filter(item => 
+          item.title.toLowerCase().includes(searchQuery) || item.desc.toLowerCase().includes(searchQuery)
+        );
+      }
 
       const itemContainer = document.getElementById('menu-items');
       itemContainer.innerHTML = filteredItems.map(item => `
@@ -508,8 +545,18 @@
 
     function changeLang(lang, el) {
       currentLang = lang;
+      // پاشەکەوتکرنا زمانێ هەلبژارتی ل ده‌ف برۆسەرێ مێڤانی
+      localStorage.setItem('hotel_lang', lang);
+
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      if(el) el.classList.add('active');
+      if(el) {
+        el.classList.add('active');
+      } else {
+        // دیارکرنا دوگمەیا چالاک ل دەما بارکرنا ئێکانە
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+          if(btn.getAttribute('onclick').includes(lang)) btn.classList.add('active');
+        });
+      }
       renderMenu();
     }
 
@@ -544,7 +591,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-      renderMenu();
+      changeLang(currentLang, null);
     });
   </script>
 </body>
